@@ -1,0 +1,19 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.core.config import settings
+
+engine = create_engine(
+    settings.DATABASE_URL,
+    pool_size=3,           # lower persistent connections
+    max_overflow=2,        # allow bursts
+    pool_pre_ping=True,    # auto-reconnect dropped conns
+    pool_recycle=1800,     # recycle every 30min
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

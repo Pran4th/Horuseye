@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String  @id @default(cuid())
+  name  String?
+  email String? @unique
+  image String?
+  scans Scan[] // Relation to Scan
+}
+
+model Invalidated_tokens {
+  id  String   @id @default(cuid())
+  exp DateTime @db.Timestamp(6)
+
+  @@map("Invalidated_tokens")
+}
+
+model Scan {
+  id             String          @id @default(cuid())
+  name           String
+  target         String
+  status         String          @default("pending") // e.g., "pending", "running", "completed", "failed"
+  userId         String
+  configuration  Json?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  user           User            @relation(fields: [userId], references: [id])
+  // onDelete: Cascade is moved to the ToolExecution model
+  toolExecutions ToolExecution[]
+
+  @@index([userId])
+}
+
+model ToolExecution {
+  id         String     @id @default(cuid())
+  scanId     String
+  toolName   String
+  status     String     @default("pending")
+  parameters Json?
+  startTime  DateTime?
+  endTime    DateTime?
+  createdAt  DateTime   @default(now())
+  // --- FIX: onDelete: Cascade is moved here ---
+  scan       Scan       @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  // onDelete: Cascade is moved to the ScanFile model
+  files      ScanFile[]
+
+  @@index([scanId])
+}
+
+model ScanFile {
+  id              String        @id @default(cuid())
+  toolExecutionId String
+  fileName        String
+  gcsPath         String        @unique
+  createdAt       DateTime      @default(now())
+  toolExecution   ToolExecution @relation(fields: [toolExecutionId], references: [id], onDelete: Cascade)
+
+  @@index([toolExecutionId])
+  @@map("ScanFile")
+}

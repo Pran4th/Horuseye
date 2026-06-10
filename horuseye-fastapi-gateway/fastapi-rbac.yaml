@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fastapi-gateway-sa
+  namespace: default # Or wherever your FastAPI gateway will run
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argo-workflow-submitter
+  namespace: argo # Grant permissions *in* the argo namespace
+rules:
+- apiGroups: ["argoproj.io"]
+  resources: ["workflows"]
+  verbs: ["create", "get", "list"] # Added get/list for potential future status checks
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: fastapi-submit-argo-workflows
+  namespace: argo # Bind the role in the argo namespace
+subjects:
+- kind: ServiceAccount
+  name: fastapi-gateway-sa
+  namespace: default # The service account running FastAPI
+roleRef:
+  kind: Role
+  name: argo-workflow-submitter
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-gateway-svc
+  namespace: default
+spec:
+  selector:
+    app: fastapi-gateway
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000 # Your Gunicorn/Uvicorn port
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-gateway
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-gateway
+  template:
+    metadata:
+      labels:
+        app: fastapi-gateway
+    spec:
+      # --- FIX: Assign the Service Account for RBAC ---
+      serviceAccountName: fastapi-gateway-sa
+      containers:
+        - name: fastapi-gateway
+          image: horuseye/fastapi-gateway:latest
+          imagePullPolicy: IfNotPresent # Use local image from Kind
+          ports:
+            - containerPort: 8000
+          
+          # --- FIX: Load .env variables from the secret ---
+          envFrom:
+            - secretRef:
+                name: fastapi-env
+          
+          # --- FIX: Add GCS Credentials ---
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/gcp/key.json
+          
+          # --- FIX: Mount the GCS secret volume ---
+          volumeMounts:
+            - name: gcp-key-volume
+              mountPath: /var/secrets/gcp
+              readOnly: true
+      
+      # --- FIX: Define the GCS secret volume ---
+      volumes:
+        - name: gcp-key-volume
+          secret:
+            secretName: gcp-sa-key # This secret must exist in the 'default' namespace
+            items:
+              - key: key.json
+                path: key.json
+

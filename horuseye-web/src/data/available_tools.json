@@ -1,0 +1,1439 @@
+{
+  "recon": [
+    {
+      "name": "nmap",
+      "default_command": "nmap -sV -O",
+      "parameters": [
+        {
+          "flag": "<target>",
+          "description": "Target host/IP/CIDR (positional).",
+          "requiresValue": true,
+          "example": "<target>",
+          "configurable": false
+        },
+        {
+          "flag": "-sS",
+          "description": "SYN stealth TCP scan (fast and common).",
+          "requiresValue": false,
+          "example": "-sS"
+        },
+        {
+          "flag": "-sT",
+          "description": "TCP connect() scan (use when raw sockets unavailable).",
+          "requiresValue": false,
+          "example": "-sT"
+        },
+        {
+          "flag": "-sU",
+          "description": "UDP scan (slower; useful for UDP services).",
+          "requiresValue": false,
+          "example": "-sU"
+        },
+        {
+          "flag": "-p",
+          "description": "Port(s) to scan; single, range or comma list.",
+          "requiresValue": true,
+          "example": "22,80,443 or 1-65535"
+        },
+        {
+          "flag": "-p-",
+          "description": "Scan all TCP ports (1-65535).",
+          "requiresValue": false,
+          "example": "-p-"
+        },
+        {
+          "flag": "-sV",
+          "description": "Service/version detection.",
+          "requiresValue": false,
+          "example": "-sV"
+        },
+        {
+          "flag": "-O",
+          "description": "Enable OS detection.",
+          "requiresValue": false,
+          "example": "-O"
+        },
+        {
+          "flag": "-A",
+          "description": "Aggressive: OS/version/script/traceroute (noisy; use with caution).",
+          "requiresValue": false,
+          "example": "-A"
+        },
+        {
+          "flag": "-Pn",
+          "description": "Skip host discovery (treat host(s) as up).",
+          "requiresValue": false,
+          "example": "-Pn"
+        },
+        {
+          "flag": "-T",
+          "description": "Timing template 0 (paranoid) to 5 (insane).",
+          "requiresValue": true,
+          "example": "-T4"
+        },
+        {
+          "flag": "--open",
+          "description": "Show only open (or possibly open) ports.",
+          "requiresValue": false,
+          "example": "--open"
+        },
+        {
+          "flag": "-oN",
+          "description": "Normal text output to file.",
+          "requiresValue": true,
+          "example": "-oN nmap-out.txt",
+          "configurable": false
+        },
+        {
+          "flag": "-oX",
+          "description": "XML output to file.",
+          "requiresValue": true,
+          "example": "-oX nmap-out.xml",
+          "configurable": false
+        },
+        {
+          "flag": "-oA",
+          "description": "Output in all formats using base name.",
+          "requiresValue": true,
+          "example": "-oA scan_base",
+          "configurable": false
+        },
+        {
+          "flag": "--script",
+          "description": "Run NSE scripts (restrict to safe categories like 'default','discovery').",
+          "requiresValue": true,
+          "example": "--script=default",
+          "configurable": false
+        },
+        {
+          "flag": "--max-retries",
+          "description": "Set max retries for probes.",
+          "requiresValue": true,
+          "example": "--max-retries 2"
+        },
+        {
+          "flag": "--host-timeout",
+          "description": "Abort host after given time (e.g. 30s, 5m).",
+          "requiresValue": true,
+          "example": "--host-timeout 30s"
+        },
+        {
+          "flag": "-6",
+          "description": "Enable IPv6 scanning.",
+          "requiresValue": false,
+          "example": "-6"
+        },
+        {
+          "flag": "--reason",
+          "description": "Show why a port is in a particular state.",
+          "requiresValue": false,
+          "example": "--reason"
+        }
+      ]
+    },
+    {
+      "name": "masscan",
+      "default_command": "masscan -p1-65535 --rate 1000",
+      "parameters": [
+        {
+          "flag": "<target>",
+          "description": "Target IP/CIDR/file (positional).",
+          "requiresValue": true,
+          "example": "<target>",
+          "configurable": false
+        },
+        {
+          "flag": "-p",
+          "description": "Port(s) to scan (single, range, list).",
+          "requiresValue": true,
+          "example": "-p 80,443 or -p 1-1024"
+        },
+        {
+          "flag": "--rate",
+          "description": "Packets per second; keep conservative (e.g. 100–1000).",
+          "requiresValue": true,
+          "example": "--rate 1000"
+        },
+        {
+          "flag": "-oJ",
+          "description": "Output JSON to file.",
+          "requiresValue": true,
+          "example": "-oJ masscan.json",
+          "configurable": false
+        },
+        {
+          "flag": "-oG",
+          "description": "Grepable output.",
+          "requiresValue": true,
+          "example": "-oG masscan.gnmap",
+          "configurable": false
+        },
+        {
+          "flag": "--wait",
+          "description": "Wait seconds to flush results after finishing.",
+          "requiresValue": true,
+          "example": "--wait 5"
+        },
+        {
+          "flag": "--adapter-ip",
+          "description": "Source IP to use on multi-homed hosts.",
+          "requiresValue": true,
+          "example": "--adapter-ip 192.0.2.5"
+        },
+        {
+          "flag": "--adapter-mac",
+          "description": "Source MAC address.",
+          "requiresValue": true,
+          "example": "--adapter-mac 00:11:22:33:44:55"
+        },
+        {
+          "flag": "-e",
+          "description": "Use specific network interface.",
+          "requiresValue": true,
+          "example": "-e eth0"
+        },
+        {
+          "flag": "--exclude",
+          "description": "Exclude a target/CIDR from scan.",
+          "requiresValue": true,
+          "example": "--exclude 203.0.113.0/24"
+        },
+        {
+          "flag": "--excludefile",
+          "description": "File with targets to exclude.",
+          "requiresValue": true,
+          "example": "--excludefile exclude.txt",
+          "configurable": false
+        }
+      ],
+      "notes": "masscan is extremely fast and can overload networks; enforce conservative --rate values."
+    },
+    {
+      "name": "amass",
+      "default_command": "amass enum",
+      "parameters": [
+        {
+          "flag": "-d",
+          "description": "Domain to enumerate.",
+          "requiresValue": true,
+          "example": "-d <domain>",
+          "configurable": false
+        },
+        {
+          "flag": "enum",
+          "description": "Enumeration mode (discover subdomains).",
+          "requiresValue": false,
+          "example": "enum"
+        },
+        {
+          "flag": "intel",
+          "description": "Intelligence gathering (OSINT).",
+          "requiresValue": false,
+          "example": "intel"
+        },
+        {
+          "flag": "-src",
+          "description": "Show data source for each finding.",
+          "requiresValue": false,
+          "example": "-src"
+        },
+        {
+          "flag": "-o",
+          "description": "Write output to file (text).",
+          "requiresValue": true,
+          "example": "-o amass-out.txt",
+          "configurable": false
+        },
+        {
+          "flag": "-oA",
+          "description": "Write output in multiple formats with base name.",
+          "requiresValue": true,
+          "example": "-oA amass_all",
+          "configurable": false
+        },
+        {
+          "flag": "-ip",
+          "description": "Show resolved IP addresses alongside names.",
+          "requiresValue": false,
+          "example": "-ip"
+        },
+        {
+          "flag": "-active",
+          "description": "Active scraping (DNS brute/zone transfer) — noisy; use in-scope only.",
+          "requiresValue": false,
+          "example": "-active"
+        },
+        {
+          "flag": "-brute",
+          "description": "Enable brute force subdomain generation (noisy).",
+          "requiresValue": false,
+          "example": "-brute"
+        },
+        {
+          "flag": "-rf",
+          "description": "Use the default wordlist (dns-Jhaddix.txt) for brute-forcing.",
+          "requiresValue": false,
+          "example": "-rf"
+        },
+        {
+          "flag": "-passive",
+          "description": "Only passive sources (quiet).",
+          "requiresValue": false,
+          "example": "-passive"
+        },
+        {
+          "flag": "-config",
+          "description": "Custom config file.",
+          "requiresValue": true,
+          "example": "-config amass-config.ini",
+          "configurable": false
+        }
+      ],
+      "notes": "Prefer passive mode initially; active modes can be noisy."
+    },
+    {
+      "name": "subfinder",
+      "parameters": [
+        {
+          "flag": "-d",
+          "description": "Domain to enumerate.",
+          "requiresValue": true,
+          "example": "-d <domain>",
+          "configurable": false
+        },
+        {
+          "flag": "-dL",
+          "description": "Scan a default list of domains.",
+          "requiresValue": false,
+          "example": "-dL"
+        },
+        {
+          "flag": "-o",
+          "description": "Write results to file (plain).",
+          "requiresValue": true,
+          "example": "-o subfinder-out.txt",
+          "configurable": false
+        },
+        {
+          "flag": "-oJ",
+          "description": "Write results in JSON format.",
+          "requiresValue": true,
+          "example": "-oJ subfinder-out.json",
+          "configurable": false
+        },
+        {
+          "flag": "-silent",
+          "description": "Minimal verbosity.",
+          "requiresValue": false,
+          "example": "-silent"
+        },
+        {
+          "flag": "-timeout",
+          "description": "Network timeout in milliseconds.",
+          "requiresValue": true,
+          "example": "-timeout 5000"
+        },
+        {
+          "flag": "-all",
+          "description": "Use all configured sources (may require API keys).",
+          "requiresValue": false,
+          "example": "-all"
+        },
+        {
+          "flag": "-nW",
+          "description": "Disable wildcard subdomain check.",
+          "requiresValue": false,
+          "example": "-nW"
+        },
+        {
+          "flag": "-rate",
+          "description": "Concurrent request rate (be conservative).",
+          "requiresValue": true,
+          "example": "-rate 50"
+        }
+      ]
+    },
+    {
+      "name": "theHarvester",
+      "default_command": "theHarvester",
+      "parameters": [
+        {
+          "flag": "-d",
+          "description": "Domain to search.",
+          "requiresValue": true,
+          "example": "-d <domain>",
+          "configurable": false
+        },
+        {
+          "flag": "-b",
+          "description": "Data source (google, bing, crtsh, all, etc.).",
+          "requiresValue": true,
+          "example": "-b all"
+        },
+        {
+          "flag": "-l",
+          "description": "Limit results per source.",
+          "requiresValue": true,
+          "example": "-l 200"
+        },
+        {
+          "flag": "-f",
+          "description": "Output file (HTML/CSV).",
+          "requiresValue": true,
+          "example": "-f theharvester-out.html",
+          "configurable": false
+        },
+        {
+          "flag": "-v",
+          "description": "Verbose output.",
+          "requiresValue": false,
+          "example": "-v"
+        },
+        {
+          "flag": "-s",
+          "description": "Start index for pagination (if supported).",
+          "requiresValue": true,
+          "example": "-s 0"
+        },
+        {
+          "flag": "-h",
+          "description": "Show help.",
+          "requiresValue": false,
+          "example": "-h"
+        }
+      ],
+      "notes": "Uses public sources; rate limits may apply."
+    },
+    {
+      "name": "recon_ng",
+      "default_command": "recon-ng --workspace <workspace> -r <script>",
+      "parameters": [
+        {
+          "flag": "--workspace",
+          "description": "Specify a custom workspace name. If omitted, one will be generated automatically.",
+          "requiresValue": true,
+          "example": "--workspace my_target"
+        }
+      ],
+      "notes": "This tool runs a predefined, safe workflow including module 'recon/domains-hosts/hackertarget' and generates an HTML report."
+    },
+    {
+      "name": "gobuster",
+      "default_command": "gobuster dir -w /path/wordlist.txt -t 50 -x php,html,txt",
+      "parameters": [
+        {
+          "flag": "mode",
+          "description": "Mode: dir, dns, or vhost.",
+          "requiresValue": true,
+          "example": "dir"
+        },
+        {
+          "flag": "-u",
+          "description": "Target URL (for dir/vhost modes).",
+          "requiresValue": true,
+          "example": "-u <target_url>"
+        },
+        {
+          "flag": "-w",
+          "description": "Use the default web content wordlist.",
+          "requiresValue": false,
+          "example": "-w"
+        },
+        {
+          "flag": "-x",
+          "description": "Extensions to append (comma-separated).",
+          "requiresValue": true,
+          "example": "-x php,html,txt"
+        },
+        {
+          "flag": "-t",
+          "description": "Concurrent threads (keep conservative).",
+          "requiresValue": true,
+          "example": "-t 50"
+        },
+        {
+          "flag": "-s",
+          "description": "Show only responses with specified status codes.",
+          "requiresValue": true,
+          "example": "-s 200,301"
+        },
+        {
+          "flag": "-o",
+          "description": "Output file.",
+          "requiresValue": true,
+          "example": "-o gobuster-out.txt",
+          "configurable": false
+        },
+        {
+          "flag": "-k",
+          "description": "Allow insecure TLS (skip cert validation).",
+          "requiresValue": false,
+          "example": "-k"
+        },
+        {
+          "flag": "-r",
+          "description": "Follow redirects.",
+          "requiresValue": false,
+          "example": "-r"
+        },
+        {
+          "flag": "-e",
+          "description": "Show full URLs in output.",
+          "requiresValue": false,
+          "example": "-e"
+        }
+      ],
+      "notes": "Wordlist-driven scans can be heavy; enforce limits and sane defaults."
+    },
+    {
+      "name": "dirsearch",
+      "default_command": "python3 dirsearch/dirsearch.py -e php,html,txt -w /path/wordlist.txt",
+      "parameters": [
+        {
+          "flag": "-u",
+          "description": "Target base URL.",
+          "requiresValue": true,
+          "example": "-u <target_url>"
+        },
+        {
+          "flag": "-w",
+          "description": "Use the default web directory wordlist.",
+          "requiresValue": false,
+          "example": "-w"
+        },
+        {
+          "flag": "-e",
+          "description": "Extensions to search (comma list).",
+          "requiresValue": true,
+          "example": "-e php,html,txt"
+        },
+        {
+          "flag": "-t",
+          "description": "Number of threads (conservative).",
+          "requiresValue": true,
+          "example": "-t 20"
+        },
+        {
+          "flag": "-x",
+          "description": "Exclude response codes.",
+          "requiresValue": true,
+          "example": "-x 404"
+        },
+        {
+          "flag": "--exclude-extensions",
+          "description": "Extensions to skip.",
+          "requiresValue": true,
+          "example": "--exclude-extensions jpg,png"
+        },
+        {
+          "flag": "--random-agent",
+          "description": "Use a random User-Agent header.",
+          "requiresValue": false,
+          "example": "--random-agent"
+        },
+        {
+          "flag": "--cookie",
+          "description": "Set cookie header for requests.",
+          "requiresValue": true,
+          "example": "--cookie \"SESSION=abc\""
+        },
+        {
+          "flag": "--timeout",
+          "description": "Request timeout in seconds.",
+          "requiresValue": true,
+          "example": "--timeout 10"
+        },
+        {
+          "flag": "-o",
+          "description": "Output file.",
+          "requiresValue": true,
+          "example": "-o dirsearch-out.txt",
+          "configurable": false
+        }
+      ],
+      "notes": "Offers HTTP options; use conservative threads and timeouts."
+    },
+    {
+      "name": "whatweb",
+      "default_command": "whatweb",
+      "parameters": [
+        {
+          "flag": "<target>",
+          "description": "Target URL or host.",
+          "requiresValue": true,
+          "example": "<target>"
+        },
+        {
+          "flag": "--log-brief",
+          "description": "Write brief log to file.",
+          "requiresValue": true,
+          "example": "--log-brief whatweb-out.txt",
+          "configurable": false
+        },
+        {
+          "flag": "-v",
+          "description": "Verbose output.",
+          "requiresValue": false,
+          "example": "-v"
+        },
+        {
+          "flag": "-a",
+          "description": "Aggressiveness 0-3 (higher is noisier).",
+          "requiresValue": true,
+          "example": "-a 2"
+        },
+        {
+          "flag": "--follow-redirects",
+          "description": "Follow HTTP redirects.",
+          "requiresValue": false,
+          "example": "--follow-redirects"
+        },
+        {
+          "flag": "--timeout",
+          "description": "Timeout in seconds.",
+          "requiresValue": true,
+          "example": "--timeout 10"
+        },
+        {
+          "flag": "--user-agent",
+          "description": "Custom User-Agent string.",
+          "requiresValue": true,
+          "example": "--user-agent \"Mozilla/5.0\""
+        },
+        {
+          "flag": "--no-error",
+          "description": "Suppress error output.",
+          "requiresValue": false,
+          "example": "--no-error"
+        },
+        {
+          "flag": "-i",
+          "description": "Input file of URLs to scan.",
+          "requiresValue": true,
+          "example": "-i urls.txt",
+          "configurable": false
+        }
+      ],
+      "notes": "Adjust -a for quieter fingerprinting."
+    },
+    {
+      "name": "dnsenum",
+      "default_command": "dnsenum",
+      "parameters": [
+        {
+          "flag": "--enum",
+          "description": "Full enumeration (whois, NS, MX, zone transfer attempts).",
+          "requiresValue": false,
+          "example": "--enum"
+        },
+        {
+          "flag": "--threads",
+          "description": "Number of threads.",
+          "requiresValue": true,
+          "example": "--threads 5"
+        },
+        {
+          "flag": "--dnsserver",
+          "description": "Use custom DNS server.",
+          "requiresValue": true,
+          "example": "--dnsserver 8.8.8.8"
+        },
+        {
+          "flag": "--file",
+          "description": "Use default wordlist for brute-forcing.",
+          "requiresValue": false,
+          "example": "--file"
+        },
+        {
+          "flag": "--retry",
+          "description": "Retry count for DNS queries.",
+          "requiresValue": true,
+          "example": "--retry 2"
+        },
+        {
+          "flag": "--whois",
+          "description": "Perform whois lookups.",
+          "requiresValue": false,
+          "example": "--whois"
+        },
+        {
+          "flag": "--mx",
+          "description": "Enumerate MX records.",
+          "requiresValue": false,
+          "example": "--mx"
+        },
+        {
+          "flag": "--asn",
+          "description": "Lookup ASN info for IP ranges.",
+          "requiresValue": false,
+          "example": "--asn"
+        },
+        {
+          "flag": "-o",
+          "description": "Output file name.",
+          "requiresValue": true,
+          "example": "-o dnsenum-out.txt",
+          "configurable": false
+        }
+      ],
+      "notes": "Zone transfer (AXFR) attempts may reveal whole DNS zones; treat any successful result as sensitive."
+    }
+  ],
+  "vuln_assessment": [
+    {
+      "name": "nuclei",
+      "default_command": "nuclei -u <target>",
+      "parameters": [
+        {
+          "flag": "-t",
+          "description": "Custom template file or directory path to use. If not provided, all templates will be used.",
+          "requiresValue": true,
+          "example": "-t /path/to/my/custom-checks/"
+        },
+        {
+          "flag": "-tags",
+          "description": "Filter templates by tags (e.g., cve,misconfig,default-logins).",
+          "requiresValue": true,
+          "example": "-tags cve,rce"
+        },
+        {
+          "flag": "-severity",
+          "description": "Filter templates by severity.",
+          "requiresValue": true,
+          "example": "-severity high,critical",
+          "options": ["info", "low", "medium", "high", "critical"]
+        },
+        {
+          "flag": "-c",
+          "description": "Concurrency (number of templates to run in parallel).",
+          "requiresValue": true,
+          "example": "-c 25"
+        },
+        {
+          "flag": "-rate-limit",
+          "description": "Requests per second rate limit.",
+          "requiresValue": true,
+          "example": "-rate-limit 150"
+        },
+        {
+          "flag": "-proxy",
+          "description": "Use a proxy for requests.",
+          "requiresValue": true,
+          "example": "-proxy http://127.0.0.1:8080"
+        }
+      ],
+      "notes": "Nuclei is a powerful, template-based vulnerability scanner. By default, it runs against the entire template library. You can provide a custom template path with -t to narrow the scope."
+    },
+    {
+      "name": "nikto",
+      "parameters": [
+        {
+          "flag": "-p",
+          "description": "Ports to scan (comma or range).",
+          "requiresValue": true,
+          "example": "80,443"
+        },
+        {
+          "flag": "-Tuning",
+          "description": "Tuning options: 1-9 to include/exclude classes of checks (lower values are safer).",
+          "requiresValue": true,
+          "example": "1,2,3"
+        },
+        {
+          "flag": "-Plugins",
+          "description": "Limit scanning to specific plugins (semicolon-separated).",
+          "requiresValue": true,
+          "example": "apache_expect_xss;subdomain"
+        },
+        {
+          "flag": "-Display",
+          "description": "Adjust output display verbosity (1–9).",
+          "requiresValue": true,
+          "example": "2"
+        },
+        {
+          "flag": "-evasion",
+          "description": "Use simple request evasion techniques (e.g., '1' for random URI encoding).",
+          "requiresValue": true,
+          "example": "1"
+        },
+        {
+          "flag": "-ssl",
+          "description": "Force SSL connection.",
+          "requiresValue": false,
+          "example": "-ssl"
+        },
+        {
+          "flag": "-useragent",
+          "description": "Set custom User-Agent header.",
+          "requiresValue": true,
+          "example": "Mozilla/5.0"
+        },
+        {
+          "flag": "-timeout",
+          "description": "Socket timeout (seconds).",
+          "requiresValue": true,
+          "example": "10"
+        },
+        {
+          "flag": "-maxtime",
+          "description": "Maximum time for a full scan (e.g., '1h', '30m', '600s').",
+          "requiresValue": true,
+          "example": "10m"
+        }
+      ],
+      "notes": "Nikto is a webserver scanner with many checks; keep tuning low and avoid high-risk tests if your UI must be non-destructive."
+    },
+    {
+      "name": "sqlmap",
+      "parameters": [
+        {
+          "flag": "--data",
+          "description": "POST data (for testing POST endpoints).",
+          "requiresValue": true,
+          "example": "--data 'id=1&cat=2'"
+        },
+        {
+          "flag": "--cookie",
+          "description": "Set cookie header.",
+          "requiresValue": true,
+          "example": "--cookie 'SESSION=abc'"
+        },
+        {
+          "flag": "--headers",
+          "description": "Custom HTTP headers (JSON or string).",
+          "requiresValue": true,
+          "example": "--headers 'User-Agent: x'"
+        },
+        {
+          "flag": "--threads",
+          "description": "Number of concurrent threads.",
+          "requiresValue": true,
+          "example": "--threads 2"
+        },
+        {
+          "flag": "--risk",
+          "description": "Risk level (1-3). Higher may run more intrusive tests.",
+          "requiresValue": true,
+          "example": "--risk 1"
+        },
+        {
+          "flag": "--level",
+          "description": "Level of tests to perform (1-5). Higher increases checks.",
+          "requiresValue": true,
+          "example": "--level 2"
+        },
+        {
+          "flag": "--technique",
+          "description": "Force specific techniques (B/T/U/E/S) — use conservative options.",
+          "requiresValue": true,
+          "example": "--technique BE"
+        },
+        {
+          "flag": "--dbs",
+          "description": "Enumerate DBMS databases (read-only).",
+          "requiresValue": false,
+          "example": "--dbs"
+        },
+        {
+          "flag": "--dump",
+          "description": "Dump DB table contents (sensitive; only use if authorized).",
+          "requiresValue": false,
+          "example": "--dump"
+        },
+        {
+          "flag": "--skip",
+          "description": "Skip tests or payloads (comma list).",
+          "requiresValue": true,
+          "example": "--skip=1,2"
+        },
+        {
+          "flag": "--timeout",
+          "description": "HTTP request timeout (seconds).",
+          "requiresValue": true,
+          "example": "--timeout 10"
+        },
+        {
+          "flag": "--random-agent",
+          "description": "Use random User-Agent for each request.",
+          "requiresValue": false,
+          "example": "--random-agent"
+        },
+        {
+          "flag": "--tamper",
+          "description": "Use tamper scripts (transform payloads) — use with caution.",
+          "requiresValue": true,
+          "example": "--tamper=space2comment,between"
+        }
+      ],
+      "notes": "sqlmap can be intrusive. Excluded exploit flags (e.g. --os-shell) from this list. In UI enforce low --risk/--level defaults."
+    },
+    {
+      "name": "trivy",
+      "parameters": [
+        {
+          "flag": "imageName",
+          "description": "The full name of the Docker image to scan (e.g., 'python:3.8-slim-buster').",
+          "requiresValue": true,
+          "example": "nginx:latest"
+        },
+        {
+          "flag": "--severity",
+          "description": "Filter by severity: CRITICAL,HIGH,MEDIUM,LOW,UNKNOWN.",
+          "requiresValue": true,
+          "example": "--severity HIGH,CRITICAL"
+        },
+        {
+          "flag": "--ignore-unfixed",
+          "description": "Ignore vulnerabilities that do not have a fix yet.",
+          "requiresValue": false,
+          "example": "--ignore-unfixed"
+        },
+        {
+          "flag": "--vuln-type",
+          "description": "Comma-separated list of vulnerability types to scan for (os, library).",
+          "requiresValue": true,
+          "example": "--vuln-type os,library"
+        },
+        {
+          "flag": "--timeout",
+          "description": "Set overall timeout for the scan (e.g., 5m, 1h).",
+          "requiresValue": true,
+          "example": "--timeout 5m"
+        }
+      ],
+      "notes": "Trivy scans container images for vulnerabilities. The main 'target' field is ignored; you must provide a Docker image name."
+    },
+    {
+      "name": "lynis",
+      "parameters": [
+        {
+          "flag": "--tests",
+          "description": "Comma-separated list of specific tests to run.",
+          "requiresValue": true,
+          "example": "--tests KRNL-5820,FILE-7524"
+        },
+        {
+          "flag": "--quick",
+          "description": "Run a quick scan (faster, less comprehensive).",
+          "requiresValue": false,
+          "example": "--quick"
+        },
+        {
+          "flag": "--auditor",
+          "description": "Set the auditor name for reports.",
+          "requiresValue": true,
+          "example": "--auditor \"Automated Scan\""
+        }
+      ],
+      "notes": "Lynis inspects the security posture of the system it runs on (this container). The main 'target' field from your request is ignored."
+    },
+    {
+      "name": "wpscan",
+      "parameters": [
+        {
+          "flag": "--enumerate",
+          "description": "Enumeration options (u=users, p=plugins, t=themes, vp=vulnerable plugins).",
+          "requiresValue": true,
+          "example": "--enumerate u,vp"
+        },
+        {
+          "flag": "--plugins-detection",
+          "description": "Method to detect plugins (passive/active).",
+          "requiresValue": true,
+          "example": "--plugins-detection passive"
+        },
+        {
+          "flag": "--api-token",
+          "description": "WPVulnDB API token for vulnerability lookups.",
+          "requiresValue": true,
+          "example": "--api-token <your_token>"
+        },
+        {
+          "flag": "--random-agent",
+          "description": "Use a random User-Agent for each request.",
+          "requiresValue": false,
+          "example": "--random-agent"
+        },
+        {
+          "flag": "--threads",
+          "description": "Number of concurrent threads.",
+          "requiresValue": true,
+          "example": "--threads 5"
+        },
+        {
+          "flag": "--disable-tls-checks",
+          "description": "Disable TLS verification (useful for test environments).",
+          "requiresValue": false,
+          "example": "--disable-tls-checks"
+        }
+      ],
+      "notes": "WPScan is a WordPress security scanner. The target must be a WordPress site."
+    },
+    {
+      "name": "zap",
+      "parameters": [
+        {
+          "flag": "targetURL",
+          "description": "The full URL to scan (e.g., http://example.com). This is required for ZAP.",
+          "requiresValue": true,
+          "example": "http://testphp.vulnweb.com"
+        },
+        {
+          "flag": "-l",
+          "description": "Minimum risk level to report (LOW, MEDIUM, HIGH, INFO)",
+          "requiresValue": true,
+          "example": "MEDIUM",
+          "valueOptions": ["INFO", "LOW", "MEDIUM", "HIGH"]
+        }
+      ],
+      "notes": "Runs a baseline dynamic scan. The main 'target' field is ignored; you must provide the full 'targetURL' below."
+    },
+    {
+      "name": "semgrep",
+      "parameters": [
+        {
+          "flag": "gitURL",
+          "description": "The full Git repository URL to clone and scan (e.g., https://github.com/user/repo.git). Required for Semgrep.",
+          "requiresValue": true,
+          "example": "https://github.com/juice-shop/juice-shop.git"
+        },
+        {
+          "flag": "--config",
+          "description": "Specific Semgrep rules to use (e.g., 'p/ci', 'p/owasp-top-ten'). Defaults to 'auto'.",
+          "requiresValue": true,
+          "example": "p/ci"
+        },
+        {
+          "flag": "--severity",
+          "description": "Only show findings of this severity or higher.",
+          "requiresValue": true,
+          "example": "ERROR",
+          "valueOptions": ["INFO", "WARNING", "ERROR"]
+        },
+        {
+          "flag": "--exclude",
+          "description": "Comma-separated paths to exclude from the scan.",
+          "requiresValue": true,
+          "example": "tests,docs"
+        }
+      ],
+      "notes": "Static analysis scanner. The main 'target' field is ignored; you must provide the 'gitURL' of a public repository below."
+    },
+    {
+      "name": "trufflehog",
+      "notes": "Finds secrets and credentials in git repositories.",
+      "parameters": [
+        {
+          "flag": "repoURL",
+          "description": "The URL of the Git repository to scan.",
+          "requiresValue": true,
+          "example": "https://github.com/trufflesecurity/test-repo"
+        },
+        {
+          "flag": "--only-verified",
+          "description": "Only show verified results.",
+          "requiresValue": false
+        },
+        {
+          "flag": "--fail",
+          "description": "Exit with 1 if results are found.",
+          "requiresValue": false
+        }
+      ]
+    },
+    {
+      "name": "gitleaks",
+      "parameters": [
+        {
+          "flag": "repoURL",
+          "description": "The URL of the git repository to scan.",
+          "requiresValue": true,
+          "example": "https://github.com/gitleaks/fake-leaks"
+        },
+        {
+          "flag": "--verbose",
+          "description": "Show verbose output.",
+          "requiresValue": false
+        },
+        {
+          "flag": "--redact",
+          "description": "Redact secrets from output.",
+          "requiresValue": false
+        }
+      ],
+      "notes": "Specialized Git repository secrets scanner."
+    },
+    {
+      "name": "yara",
+      "parameters": [
+        {
+          "flag": "repoURL",
+          "description": "The URL of the Git repository to scan for malware patterns.",
+          "requiresValue": true,
+          "example": "https://github.com/Yara-Rules/rules"
+        },
+        {
+          "flag": "-s",
+          "description": "Print matching strings in the output.",
+          "requiresValue": false
+        },
+        {
+          "flag": "-m",
+          "description": "Print metadata for matching rules.",
+          "requiresValue": false
+        },
+        {
+          "flag": "-w",
+          "description": "Disable warnings.",
+          "requiresValue": false
+        }
+      ],
+      "notes": "Pattern matching for malware detection and file analysis. Uses a comprehensive set of community rules."
+    },
+    {
+      "name": "httpx",
+      "notes": "Fast HTTP service probing with technology detection.",
+      "parameters": []
+    }
+  ],
+  "exploits": [
+    {
+      "name": "msfconsole",
+      "default_command": "msfconsole",
+      "parameters": [
+        {
+          "flag": "-h",
+          "description": "Show help/usage.",
+          "requiresValue": false,
+          "example": "-h"
+        },
+        {
+          "flag": "--version",
+          "description": "Show Metasploit version.",
+          "requiresValue": false,
+          "example": "--version"
+        },
+        {
+          "flag": "-q",
+          "description": "Quiet mode (less verbose on startup).",
+          "requiresValue": false,
+          "example": "-q"
+        },
+        {
+          "flag": "-r",
+          "description": "Run resource script (runs commands from file). NOTE: can be used to run exploits — treat as DANGEROUS and disable by default.",
+          "requiresValue": true,
+          "example": "-r /path/to/resource.rc",
+          "configurable": false
+        },
+        {
+          "flag": "-x",
+          "description": "Execute a command non-interactively (runs one Metasploit console command). NOTE: potentially dangerous; treat as DANGEROUS.",
+          "requiresValue": true,
+          "example": "-x \"help\""
+        },
+        {
+          "flag": "--config",
+          "description": "Load alternate configuration file.",
+          "requiresValue": true,
+          "example": "--config /path/msf.yml",
+          "configurable": false
+        }
+      ],
+      "notes": "Metasploit is a full exploitation framework. Allow only informational flags (-h, --version, -q) in automated tooling unless you have explicit authorization. Resource/script execution flags (-r, -x) are powerful and should be gated behind confirmation and strict auditing."
+    },
+    {
+      "name": "searchsploit",
+      "default_command": "searchsploit",
+      "parameters": [
+        {
+          "flag": "<query>",
+          "description": "Search term (positional).",
+          "requiresValue": true,
+          "example": "<query>"
+        },
+        {
+          "flag": "-j",
+          "description": "Show results in JSON format.",
+          "requiresValue": false,
+          "example": "-j"
+        },
+        {
+          "flag": "-w",
+          "description": "Show web links to matched results (no download).",
+          "requiresValue": false,
+          "example": "-w"
+        },
+        {
+          "flag": "-t",
+          "description": "Show titles only.",
+          "requiresValue": false,
+          "example": "-t"
+        },
+        {
+          "flag": "-p",
+          "description": "Show exploits matching platform (e.g. 'windows', 'linux').",
+          "requiresValue": true,
+          "example": "-p linux"
+        },
+        {
+          "flag": "-l",
+          "description": "List local DB path (show installed exploit db location).",
+          "requiresValue": false,
+          "example": "-l"
+        },
+        {
+          "flag": "--update",
+          "description": "Update local exploit-db mirrors (read-only network op).",
+          "requiresValue": false,
+          "example": "--update"
+        },
+        {
+          "flag": "--help",
+          "description": "Show help.",
+          "requiresValue": false,
+          "example": "--help"
+        }
+      ],
+      "notes": "searchsploit only finds and displays exploits; it does not execute them. Safe for automated discovery UIs."
+    },
+    {
+      "name": "msfvenom",
+      "default_command": "msfvenom --list payloads",
+      "parameters": [
+        {
+          "flag": "--list",
+          "description": "List payloads or encoders (safe; informational).",
+          "requiresValue": true,
+          "example": "--list payloads",
+          "configurable": false
+        },
+        {
+          "flag": "--payload-options",
+          "description": "Show options for a given payload (informational).",
+          "requiresValue": true,
+          "example": "--payload-options <payload>"
+        },
+        {
+          "flag": "-h",
+          "description": "Help/usage.",
+          "requiresValue": false,
+          "example": "-h"
+        },
+        {
+          "flag": "--arch",
+          "description": "Show architectures supported by payload (informational).",
+          "requiresValue": true,
+          "example": "--arch x64"
+        },
+        {
+          "flag": "--platform",
+          "description": "Filter payloads by platform (informational).",
+          "requiresValue": true,
+          "example": "--platform linux"
+        },
+        {
+          "flag": "--list-options",
+          "description": "List available encoders / formats (informational).",
+          "requiresValue": false,
+          "example": "--list-options"
+        }
+      ],
+      "notes": "msfvenom can generate payloads (highly sensitive). This config exposes *only* listing/inspection flags. Do NOT enable payload generation or output-to-file flags in an automated pipeline unless explicitly authorized and audited."
+    },
+    {
+      "name": "crackmapexec",
+      "default_command": "crackmapexec --help",
+      "parameters": [
+        {
+          "flag": "--version",
+          "description": "Show version.",
+          "requiresValue": false,
+          "example": "--version"
+        },
+        {
+          "flag": "--help",
+          "description": "Help/usage.",
+          "requiresValue": false,
+          "example": "--help"
+        },
+        {
+          "flag": "smb",
+          "description": "SMB module placeholder (CME subcommand). NOTE: running modules may be intrusive; disable risky subcommands by default.",
+          "requiresValue": false,
+          "example": "smb <target>"
+        },
+        {
+          "flag": "--list-modules",
+          "description": "List available modules (informational).",
+          "requiresValue": false,
+          "example": "--list-modules"
+        },
+        {
+          "flag": "--log",
+          "description": "Log output to a file (read-only effect).",
+          "requiresValue": true,
+          "example": "--log cme.log",
+          "configurable": false
+        },
+        {
+          "flag": "--no-bruteforce",
+          "description": "Placeholder to indicate you should not enable brute forcing in automated runs.",
+          "requiresValue": false,
+          "example": "--no-bruteforce"
+        }
+      ],
+      "notes": "CME is powerful for lateral movement and credential testing. In automated tooling expose only discovery/info flags and never credential brute-forcing or remote command execution options without explicit, auditable consent."
+    },
+    {
+      "name": "enum4linux",
+      "default_command": "enum4linux -h",
+      "parameters": [
+        {
+          "flag": "-h",
+          "description": "Show help and usage (safe).",
+          "requiresValue": false,
+          "example": "-h"
+        },
+        {
+          "flag": "-a",
+          "description": "Run all enumeration (may be noisy) — mark as potentially intrusive and gate in UI.",
+          "requiresValue": false,
+          "example": "-a"
+        },
+        {
+          "flag": "-u",
+          "description": "Specify a username for certain queries (informational), use with authorization.",
+          "requiresValue": true,
+          "example": "-u <username>"
+        },
+        {
+          "flag": "-P",
+          "description": "Enumerate domain policy information (read-only).",
+          "requiresValue": false,
+          "example": "-P"
+        },
+        {
+          "flag": "-S",
+          "description": "List SMB shares (discovery).",
+          "requiresValue": false,
+          "example": "-S"
+        }
+      ],
+      "notes": "enum4linux is for SMB/AD enumeration. Restrict -a (full enumeration) by policy when driving from automation."
+    },
+    {
+      "name": "ncat",
+      "default_command": "ncat --help",
+      "parameters": [
+        {
+          "flag": "-h",
+          "description": "Show help/usage.",
+          "requiresValue": false,
+          "example": "-h"
+        },
+        {
+          "flag": "--version",
+          "description": "Show version.",
+          "requiresValue": false,
+          "example": "--version"
+        },
+        {
+          "flag": "--listen",
+          "description": "Put ncat into listening mode (powerful — DANGEROUS; do not enable in automation by default).",
+          "requiresValue": false,
+          "example": "--listen"
+        },
+        {
+          "flag": "--send-only",
+          "description": "Send-only mode (non-interactive).",
+          "requiresValue": false,
+          "example": "--send-only"
+        },
+        {
+          "flag": "--recv-only",
+          "description": "Receive-only mode (non-interactive).",
+          "requiresValue": false,
+          "example": "--recv-only"
+        },
+        {
+          "flag": "--ssl",
+          "description": "Enable SSL/TLS for connections (informational).",
+          "requiresValue": false,
+          "example": "--ssl"
+        }
+      ],
+      "notes": "ncat can be used for shells and file transfer. In an automated pentest app, restrict or disable listening/interactive flags and expose only informational ones."
+    },
+    {
+      "name": "impacket",
+      "default_command": "impacket-commands",
+      "parameters": [
+        {
+          "flag": "--help",
+          "description": "Show help for a given impacket script (e.g. wmiexec.py -h) — safe.",
+          "requiresValue": false,
+          "example": "--help"
+        },
+        {
+          "flag": "list",
+          "description": "List available impacket scripts (informational).",
+          "requiresValue": false,
+          "example": "list"
+        },
+        {
+          "flag": "smbserver.py --help",
+          "description": "Show help for smbserver.py (do NOT run server in automation).",
+          "requiresValue": false,
+          "example": "smbserver.py --help"
+        },
+        {
+          "flag": "wmiexec.py --help",
+          "description": "Show help for wmiexec.py (info only).",
+          "requiresValue": false,
+          "example": "wmiexec.py --help"
+        }
+      ],
+      "notes": "Impacket contains many offensive helpers. Expose only discovery and help/listing interactions in automation and explicitly block scripts that execute remote commands or run servers."
+    },
+    {
+      "name": "exploit_db",
+      "default_command": "edb-search",
+      "parameters": [
+        {
+          "flag": "<query>",
+          "description": "Search term to locate exploits (positional).",
+          "requiresValue": true,
+          "example": "<query>"
+        },
+        {
+          "flag": "--show",
+          "description": "Show exploit metadata (safe).",
+          "requiresValue": false,
+          "example": "--show"
+        },
+        {
+          "flag": "--download",
+          "description": "Download exploit code to local machine. NOTE: downloading exploit code may be sensitive — mark as DANGEROUS and require confirmation.",
+          "requiresValue": true,
+          "example": "--download <exploit-id>"
+        },
+        {
+          "flag": "--update",
+          "description": "Update local database/index (network read-only op).",
+          "requiresValue": false,
+          "example": "--update"
+        },
+        {
+          "flag": "--format",
+          "description": "Output format (json/text).",
+          "requiresValue": true,
+          "example": "--format json",
+          "configurable": false
+        }
+      ],
+      "notes": "Searching and reading exploit metadata is safe. Downloading exploit code should be gated and audited."
+    }
+  ]
+}

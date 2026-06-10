@@ -1,0 +1,80 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+# Virtual environments
+venv/
+.env/
+.venv/
+ENV/
+env/
+*.env
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dll
+*.dylib
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Alembic migrations cache
+alembic/versions/*.pyc
+alembic/versions/__pycache__/
+
+# Local databases
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# FastAPI specific
+*.pid
+
+gcloud-credentials.json
